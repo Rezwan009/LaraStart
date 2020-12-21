@@ -14,3 +14,16 @@ $fa-font-path: "../webfonts";
 
 @import "~bootstrap/scss/bootstrap";
 @import "~admin-lte/dist/css/adminlte.css";
+
+.router-link-exact-active {
+    color: #ffffff !important;
+    background-color: #007bff !important;
+}
+.brand-image {
+    line-height: 0.8;
+    max-height: 34px !important;
+    width: 34px !important;
+    margin-left: 0.8rem;
+    margin-right: 0.5rem;
+    margin-top: -3px;
+}
