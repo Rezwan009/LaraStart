@@ -24,16 +24,21 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Type</th>
+                  <th>Created At</th>
+
                   <th>Modify</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
+                <tr v-for="user in users" :key="user.id">
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.email }}</td>
                   <td>
-                    <span class="tag tag-success">Approved</span>
+                    <span class="tag tag-success">{{ user.type }}</span>
+                  </td>
+                  <td>
+                    <span class="tag tag-success">{{ user.created_at }}</span>
                   </td>
                   <td>
                     <a href="#">
@@ -76,7 +81,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form @submit="createUser">
+          <form @submit.prevent="createUser">
             <div class="modal-body">
               <div class="form-group">
                 <input
@@ -158,6 +163,7 @@
 export default {
   data() {
     return {
+      users: {},
       form: new Form({
         name: "",
         email: "",
@@ -169,12 +175,15 @@ export default {
     };
   },
   methods: {
+    loadUsers() {
+      axios.get("api/user").then(({ data }) => (this.users = data.data));
+    },
     createUser() {
-      this.from.post("api/user");
+      this.form.post("api/user");
     },
   },
-  mounted() {
-    console.log("Component mounted.");
+  created() {
+    this.loadUsers();
   },
 };
 </script>
