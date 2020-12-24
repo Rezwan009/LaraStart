@@ -9,6 +9,10 @@ require("admin-lte");
 
 window.Vue = require("vue");
 
+import VueProgressBar from 'vue-progressbar'
+
+import moment from "moment";
+
 import VueRouter from "vue-router";
 
 import Dashboard from "./components/Dashboard.vue";
@@ -17,6 +21,21 @@ import Users from "./components/Users.vue";
 
 Vue.use(VueRouter);
 
+const options = {
+  color: 'rgb(143,255,199)',
+  failedColor: 'red',
+  thickness: '3px',
+  transition: {
+    speed: '0.2s',
+    opacity: '0.6s',
+    termination: 300
+  },
+  autoRevert: true,
+  location: 'top',
+  inverse: false
+}
+
+Vue.use(VueProgressBar, options)
 
 import { Form, HasError, AlertError } from 'vform'
 
@@ -24,6 +43,14 @@ window.Form = Form;
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
+
+Vue.filter('capitalize',function(value){
+  return value.charAt(0).toUpperCase() + value.slice(1)
+})
+
+Vue.filter('customDate',function(date){
+    return moment(date).format("LL");
+})
 
 let routes = [
     { path: "/dashboard", component: Dashboard },

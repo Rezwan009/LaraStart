@@ -35,10 +35,14 @@
                   <td>{{ user.name }}</td>
                   <td>{{ user.email }}</td>
                   <td>
-                    <span class="tag tag-success">{{ user.type }}</span>
+                    <span class="tag tag-success">{{
+                      user.type | capitalize
+                    }}</span>
                   </td>
                   <td>
-                    <span class="tag tag-success">{{ user.created_at }}</span>
+                    <span class="tag tag-success">{{
+                      user.created_at | customDate
+                    }}</span>
                   </td>
                   <td>
                     <a href="#">
@@ -179,7 +183,10 @@ export default {
       axios.get("api/user").then(({ data }) => (this.users = data.data));
     },
     createUser() {
+      this.$Progress.start();
       this.form.post("api/user");
+      //myModal.hide();
+      this.$Progress.finish();
     },
   },
   created() {
