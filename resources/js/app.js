@@ -9,18 +9,8 @@ require("admin-lte");
 
 window.Vue = require("vue");
 
+/* For showing progress-bar while user data creating */
 import VueProgressBar from 'vue-progressbar'
-
-import moment from "moment";
-
-import VueRouter from "vue-router";
-
-import Dashboard from "./components/Dashboard.vue";
-import Profile from "./components/Profile.vue";
-import Users from "./components/Users.vue";
-
-Vue.use(VueRouter);
-
 const options = {
   color: 'rgb(143,255,199)',
   failedColor: 'red',
@@ -34,15 +24,53 @@ const options = {
   location: 'top',
   inverse: false
 }
-
 Vue.use(VueProgressBar, options)
 
+/* TO customize date formate for more user readable formate */
+
+import moment from "moment";
+
+/* Creating sweet alert for shwing user created message  */
+import Swal from 'sweetalert2'
+window.Swal = Swal;
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+window.Toast = Toast;
+
+/* Vue router  */
+
+import VueRouter from "vue-router";
+Vue.use(VueRouter);
+
+
+/* importing component */
+
+import Dashboard from "./components/Dashboard.vue";
+import Profile from "./components/Profile.vue";
+import Users from "./components/Users.vue";
+
+
+
+
+/* Importing vue V-form for more stunning data validation and more stuff */
 import { Form, HasError, AlertError } from 'vform'
 
 window.Form = Form;
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
+
+/* Define filter for customization  */
 
 Vue.filter('capitalize',function(value){
   return value.charAt(0).toUpperCase() + value.slice(1)
@@ -52,6 +80,10 @@ Vue.filter('customDate',function(date){
     return moment(date).format("LL");
 })
 
+/* Creating custom events for loading user after creating it */
+window.Fire = new Vue()
+
+/* Defining all vue routes */
 let routes = [
     { path: "/dashboard", component: Dashboard },
     { path: "/profile", component: Profile },

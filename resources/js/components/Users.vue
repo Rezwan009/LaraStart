@@ -184,13 +184,31 @@ export default {
     },
     createUser() {
       this.$Progress.start();
-      this.form.post("api/user");
-      //myModal.hide();
-      this.$Progress.finish();
+
+      this.form
+        .post("api/user")
+        .then(() => {
+          /* Custom event declaring */
+          Fire.$emit("AfterCreate");
+
+          $("#addNew").modal("hide");
+
+          Toast.fire({
+            icon: "success",
+            title: "User Created successfully",
+          });
+          this.$Progress.finish();
+        })
+        .catch(() => {});
     },
   },
   created() {
     this.loadUsers();
+    /* When a new user created it gonna load it instantly */
+    Fire.$on("AfterCreate", () => {
+      this.loadUsers();
+    });
+    // window.setInterval(() => this.loadUsers(), 3000);
   },
 };
 </script>
