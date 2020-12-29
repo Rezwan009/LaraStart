@@ -2200,6 +2200,7 @@ __webpack_require__.r(__webpack_exports__);
       editMode: true,
       users: {},
       form: new Form({
+        id: "",
         name: "",
         email: "",
         bio: "",
@@ -2211,7 +2212,22 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateUser: function updateUser() {
-      console.log("Editing data");
+      var _this = this;
+
+      /* console.log("Editing data"); */
+      this.$Progress.start(); // Send the ajax request via v-form
+
+      this.form.put("api/user/" + this.form.id).then(function () {
+        $("#addNew").modal("hide");
+        Fire.$emit("AfterCreate");
+        Swal.fire("Updated!", "Your file has been updated.", "success");
+
+        _this.$Progress.finish();
+      })["catch"](function () {
+        _this.$Progress.fail();
+
+        Swal.fire("Warning!", "Something Wrong.Opps!!!", "warning");
+      });
     },
     newModal: function newModal() {
       this.editMode = false;
@@ -2224,15 +2240,15 @@ __webpack_require__.r(__webpack_exports__);
       $("#addNew").modal("show");
     },
     loadUsers: function loadUsers() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get("api/user").then(function (_ref) {
         var data = _ref.data;
-        return _this.users = data.data;
+        return _this2.users = data.data;
       });
     },
     createUser: function createUser() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$Progress.start();
       this.form.post("api/user").then(function () {
@@ -2244,12 +2260,17 @@ __webpack_require__.r(__webpack_exports__);
           title: "User Created successfully"
         });
 
-        _this2.$Progress.finish();
-      })["catch"](function () {});
+        _this3.$Progress.finish();
+      })["catch"](function () {
+        _this3.$Progress.fail();
+
+        Swal.fire("Warning!", "Something Wrong.Opps!!!", "warning");
+      });
     },
     deleteUser: function deleteUser(id) {
-      var _this3 = this;
+      var _this4 = this;
 
+      this.$Progress.start();
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -2260,10 +2281,14 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "Yes, delete it!"
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this3.form["delete"]("api/user/" + id).then(function () {
+          _this4.form["delete"]("api/user/" + id).then(function () {
             Swal.fire("Deleted!", "Your file has been deleted.", "success");
             Fire.$emit("AfterCreate");
+
+            _this4.$Progress.finish();
           })["catch"](function () {
+            _this4.$Progress.fail();
+
             Swal.fire("Warning!", "Something Wrong.Opps!!!", "warning");
           });
         }
@@ -2271,13 +2296,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    var _this4 = this;
+    var _this5 = this;
 
     this.loadUsers();
     /* When a new user created it gonna load it instantly */
 
     Fire.$on("AfterCreate", function () {
-      _this4.loadUsers();
+      _this5.loadUsers();
     }); // window.setInterval(() => this.loadUsers(), 3000);
   }
 });

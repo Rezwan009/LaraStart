@@ -175,6 +175,7 @@ export default {
       editMode: true,
       users: {},
       form: new Form({
+        id: "",
         name: "",
         email: "",
         bio: "",
@@ -186,7 +187,23 @@ export default {
   },
   methods: {
     updateUser() {
-      console.log("Editing data");
+      /* console.log("Editing data"); */
+      this.$Progress.start();
+
+      // Send the ajax request via v-form
+      this.form
+        .put("api/user/" + this.form.id)
+        .then(() => {
+          $("#addNew").modal("hide");
+          Fire.$emit("AfterCreate");
+          Swal.fire("Updated!", "Your file has been updated.", "success");
+
+          this.$Progress.finish();
+        })
+        .catch(() => {
+          this.$Progress.fail();
+          Swal.fire("Warning!", "Something Wrong.Opps!!!", "warning");
+        });
     },
     newModal() {
       this.editMode = false;
@@ -218,9 +235,13 @@ export default {
           });
           this.$Progress.finish();
         })
-        .catch(() => {});
+        .catch(() => {
+          this.$Progress.fail();
+          Swal.fire("Warning!", "Something Wrong.Opps!!!", "warning");
+        });
     },
     deleteUser(id) {
+      this.$Progress.start();
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -236,8 +257,10 @@ export default {
             .then(() => {
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
               Fire.$emit("AfterCreate");
+              this.$Progress.finish();
             })
             .catch(() => {
+              this.$Progress.fail();
               Swal.fire("Warning!", "Something Wrong.Opps!!!", "warning");
             });
         }
