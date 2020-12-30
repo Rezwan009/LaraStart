@@ -23,3 +23,4 @@ Route::apiResources([
     'user' => UserController::class,
 
 ]);
+Route::get('profile', [App\Http\Controllers\API\UserController::class, 'profile']);

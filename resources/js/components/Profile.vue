@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <div class="card card-widget widget-user">
+        <div class="card card-widget widget-user mt-3">
           <!-- Add the bg color to the header using any of the bg-* classes -->
           <div
             class="widget-user-header text-white"
@@ -63,7 +63,9 @@
           <!-- /.card-header -->
           <div class="card-body">
             <div class="tab-content">
-              <div class="tab-pane active" id="activity"></div>
+              <div class="tab-pane active" id="activity">
+                <h1>Will Have some feature</h1>
+              </div>
               <!-- /.tab-pane -->
 
               <!-- /.tab-pane -->
@@ -76,6 +78,7 @@
                     >
                     <div class="col-sm-10">
                       <input
+                        v-model="form.name"
                         type="email"
                         class="form-control"
                         id="inputName"
@@ -89,6 +92,7 @@
                     >
                     <div class="col-sm-10">
                       <input
+                        v-model="form.email"
                         type="email"
                         class="form-control"
                         id="inputEmail"
@@ -96,7 +100,7 @@
                       />
                     </div>
                   </div>
-                  <div class="form-group row">
+                  <!--   <div class="form-group row">
                     <label for="inputName2" class="col-sm-2 col-form-label"
                       >Name</label
                     >
@@ -108,7 +112,7 @@
                         placeholder="Name"
                       />
                     </div>
-                  </div>
+                  </div> -->
                   <div class="form-group row">
                     <label for="inputExperience" class="col-sm-2 col-form-label"
                       >Experience</label
@@ -122,19 +126,32 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="inputSkills" class="col-sm-2 col-form-label"
-                      >Skills</label
+                    <label for="file" class="col-sm-2 col-form-label"
+                      >Upload Photo</label
                     >
                     <div class="col-sm-10">
                       <input
-                        type="text"
-                        class="form-control"
-                        id="inputSkills"
-                        placeholder="Skills"
+                        type="file"
+                        name="photo"
+                        @change="updatePhoto"
+                        id="file"
                       />
                     </div>
                   </div>
                   <div class="form-group row">
+                    <label for="inputName2" class="col-sm-2 col-form-label"
+                      >Password</label
+                    >
+                    <div class="col-sm-10">
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        placeholder="Change password"
+                      />
+                    </div>
+                  </div>
+                  <!-- <div class="form-group row">
                     <div class="offset-sm-2 col-sm-10">
                       <div class="checkbox">
                         <label>
@@ -143,10 +160,10 @@
                         </label>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="form-group row">
                     <div class="offset-sm-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger">
+                      <button type="submit" class="btn btn-success">
                         Submit
                       </button>
                     </div>
@@ -166,6 +183,34 @@
 
 <script>
 export default {
+  data() {
+    return {
+      form: new Form({
+        id: "",
+        name: "",
+        email: "",
+        bio: "",
+        type: "",
+        photo: "",
+        password: "",
+      }),
+    };
+  },
+  methods: {
+    updatePhoto(e) {
+      /* console.log(e); */
+      let file = e.target.files[0];
+      let reader = new FileReader();
+      reader.onloadend = (file) => {
+        /* console.log("RESULT", reader.result); */
+        this.form.photo = reader.result;
+      };
+      reader.readAsDataURL(file);
+    },
+  },
+  created() {
+    axios.get("api/profile").then(({ data }) => this.form.fill(data));
+  },
   mounted() {
     console.log("Component mounted.");
   },
