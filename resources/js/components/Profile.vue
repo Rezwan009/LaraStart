@@ -100,19 +100,6 @@
                       />
                     </div>
                   </div>
-                  <!--   <div class="form-group row">
-                    <label for="inputName2" class="col-sm-2 col-form-label"
-                      >Name</label
-                    >
-                    <div class="col-sm-10">
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="inputName2"
-                        placeholder="Name"
-                      />
-                    </div>
-                  </div> -->
                   <div class="form-group row">
                     <label for="inputExperience" class="col-sm-2 col-form-label"
                       >Experience</label
@@ -151,20 +138,14 @@
                       />
                     </div>
                   </div>
-                  <!-- <div class="form-group row">
-                    <div class="offset-sm-2 col-sm-10">
-                      <div class="checkbox">
-                        <label>
-                          <input type="checkbox" /> I agree to the
-                          <a href="#">terms and conditions</a>
-                        </label>
-                      </div>
-                    </div>
-                  </div> -->
                   <div class="form-group row">
                     <div class="offset-sm-2 col-sm-10">
-                      <button type="submit" class="btn btn-success">
-                        Submit
+                      <button
+                        type="submit"
+                        @click.prevent="updateProfile"
+                        class="btn btn-success"
+                      >
+                        Update
                       </button>
                     </div>
                   </div>
@@ -197,6 +178,12 @@ export default {
     };
   },
   methods: {
+    updateProfile() {
+      this.form
+        .put("api/profile")
+        .then(() => {})
+        .catch(() => {});
+    },
     updatePhoto(e) {
       /* console.log(e); */
       let file = e.target.files[0];
