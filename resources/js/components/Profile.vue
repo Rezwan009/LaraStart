@@ -6,7 +6,10 @@
           <!-- Add the bg color to the header using any of the bg-* classes -->
           <div
             class="widget-user-header text-white"
-            style="background: url('/img/cover2.jpg') center center"
+            style="
+              background: url('/img/cover2.jpg') center center;
+              background-size: cover;
+            "
           >
             <h3 class="widget-user-username text-right">Elizabeth Pierce</h3>
             <h5 class="widget-user-desc text-right">Web Designer</h5>
@@ -134,6 +137,8 @@
                         type="password"
                         class="form-control"
                         id="password"
+                        name="password"
+                        v-model="form.password"
                         placeholder="Change password"
                       />
                     </div>
@@ -161,7 +166,7 @@
     </div>
   </div>
 </template>
-
+<style lang="stylus" scoped></style>
 <script>
 export default {
   data() {
@@ -179,20 +184,35 @@ export default {
   },
   methods: {
     updateProfile() {
+      this.$Progress.start();
       this.form
         .put("api/profile")
-        .then(() => {})
-        .catch(() => {});
+        .then(() => {
+          Toast.fire({
+            icon: "success",
+            title: "Profile updated successfully",
+          });
+          this.$Progress.finish();
+        })
+        .catch(() => {
+          this.$Progress.fail();
+        });
     },
     updatePhoto(e) {
       /* console.log(e); */
       let file = e.target.files[0];
       let reader = new FileReader();
-      reader.onloadend = (file) => {
-        /* console.log("RESULT", reader.result); */
-        this.form.photo = reader.result;
-      };
-      reader.readAsDataURL(file);
+
+      if (file["size"] < 2111775) {
+        reader.onloadend = (file) => {
+          /* console.log("RESULT", reader.result); */
+          console.log(file);
+          this.form.photo = reader.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        Swal.fire("Opps!!!", "You are uploading larage file", "error");
+      }
     },
   },
   created() {
