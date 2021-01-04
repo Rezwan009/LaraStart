@@ -85,6 +85,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </router-link>
 
             </li>
+            @can('isAdmin')
             <li class="nav-item ">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-cog text-pink"></i>
@@ -108,6 +109,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
               </ul>
             </li>
+            @endcan
             <li class="nav-item">
               <router-link to="/profile" class="nav-link">
                 <i class="nav-icon fas fa-user text-orange"></i>

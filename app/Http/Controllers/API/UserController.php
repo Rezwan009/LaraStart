@@ -121,6 +121,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+
+        $this->authorize('isAdmin');
         //Find particular user
         $user = User::findOrFail($id);
 
