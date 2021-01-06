@@ -7,6 +7,8 @@
 
                     <div class="card-body">
                         I'm an example component.
+
+                        <NotFound/>
                     </div>
                 </div>
             </div>
@@ -15,7 +17,9 @@
 </template>
 
 <script>
+import NotFound from "./NotFound";
 export default {
+    components: {NotFound},
     mounted() {
         console.log("Component mounted.");
     }

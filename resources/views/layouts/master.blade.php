@@ -130,7 +130,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();                                        
+              <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
               document.getElementById('logout-form').submit();">
                 <i class="nav-icon fas fa-power-off text-red"></i>
                 <p>{{ __('Logout') }}</p>
@@ -185,6 +185,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </div>
   <!-- ./wrapper -->
 
+
+  <!-- Store current user information to window.user -->
+
+  @auth
+  <script>
+    window.User = @json(auth()->user());
+    //console.log(window.User);
+  </script>
+  @endauth
   <!-- REQUIRED SCRIPTS -->
   <script src="/js/app.js"></script>
 </body>

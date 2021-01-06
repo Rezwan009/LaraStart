@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row pt-5">
+    <div class="row pt-5"  v-if="$gate.isAdmin()">
       <div class="col-12">
         <div class="card">
           <div class="card-header">
@@ -58,6 +58,14 @@
         <!-- /.card -->
       </div>
     </div>
+
+
+      <div v-if="!$gate.isAdmin()">
+          <NotFound/>
+      </div>
+
+
+
     <!-- Button trigger modal -->
     <!-- Modal -->
     <div
@@ -165,12 +173,16 @@
         </div>
       </div>
     </div>
+
+
   </div>
 </template>
 
 <script>
+import NotFound from "./NotFound";
 export default {
-  data() {
+    components: {NotFound},
+    data() {
     return {
       editMode: true,
       users: {},
@@ -216,7 +228,10 @@ export default {
       $("#addNew").modal("show");
     },
     loadUsers() {
-      axios.get("api/user").then(({ data }) => (this.users = data.data));
+        if (this.$gate.isAdmin()){
+           axios.get("api/user").then(({ data }) => (this.users = data.data));
+
+        }
     },
     createUser() {
       this.$Progress.start();

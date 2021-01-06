@@ -4,10 +4,22 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
+
+import Vue from "vue";
+
 require("./bootstrap");
 require("admin-lte");
 
 window.Vue = require("vue");
+
+
+
+import Gate from "./Gate";
+
+Vue.prototype.$gate = new Gate(window.User);
+
+//console.log(window.User);
 
 /* For showing progress-bar while user data creating */
 import VueProgressBar from 'vue-progressbar'
@@ -62,6 +74,7 @@ import Users from "./components/Users.vue";
 
 
 
+
 /* Importing vue V-form for more stunning data validation and more stuff */
 import { Form, HasError, AlertError } from 'vform'
 
@@ -103,6 +116,7 @@ const router = new VueRouter({
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+
 
 Vue.component(
     "example-component",
