@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
 
@@ -20,8 +21,13 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return User::latest()->paginate(10);
+    {        //$this->authorize('isAdmin');
+        if(Gate::allows('isUser') || Gate::allows('isAuthor')){
+
+            return User::latest()->paginate(10);
+
+        }
+
     }
 
     /**
@@ -122,7 +128,7 @@ class UserController extends Controller
     public function destroy($id)
     {
 
-        $this->authorize('isAdmin');
+        //$this->authorize('isAdmin');
         //Find particular user
         $user = User::findOrFail($id);
 

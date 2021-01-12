@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row pt-5"  v-if="$gate.isAdmin()">
+    <div class="row pt-5"  v-if="$gate.isUserOrAuthor()">
       <div class="col-12">
         <div class="card">
           <div class="card-header">
@@ -60,7 +60,7 @@
     </div>
 
 
-      <div v-if="!$gate.isAdmin()">
+      <div v-if="!$gate.isUserOrAuthor()">
           <NotFound/>
       </div>
 
@@ -228,7 +228,7 @@ export default {
       $("#addNew").modal("show");
     },
     loadUsers() {
-        if (this.$gate.isAdmin()){
+        if (this.$gate.isUserOrAuthor()){
            axios.get("api/user").then(({ data }) => (this.users = data.data));
 
         }

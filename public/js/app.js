@@ -1942,8 +1942,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -2523,7 +2521,7 @@ __webpack_require__.r(__webpack_exports__);
     loadUsers: function loadUsers() {
       var _this2 = this;
 
-      if (this.$gate.isAdmin()) {
+      if (this.$gate.isUserOrAuthor()) {
         axios.get("api/user").then(function (_ref) {
           var data = _ref.data;
           return _this2.users = data.data;
@@ -65058,31 +65056,32 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("Dashboard Component")
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            [
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c("div", { staticClass: "col-md-8" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v("Dashboard Component")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
               _vm._v(
-                "\n                    I'm an example component.\n\n                    "
-              ),
-              _c("NotFound")
-            ],
-            1
-          )
+                "\n                    I'm an example component.\n                "
+              )
+            ])
+          ])
         ])
       ])
     ])
-  ])
-}
-var staticRenderFns = []
+  }
+]
 render._withStripped = true
 
 
@@ -65839,7 +65838,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _vm.$gate.isAdmin()
+    _vm.$gate.isUserOrAuthor()
       ? _c("div", { staticClass: "row pt-5" }, [
           _c("div", { staticClass: "col-12" }, [
             _c("div", { staticClass: "card" }, [
@@ -65929,7 +65928,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    !_vm.$gate.isAdmin() ? _c("div", [_c("NotFound")], 1) : _vm._e(),
+    !_vm.$gate.isUserOrAuthor() ? _c("div", [_c("NotFound")], 1) : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
@@ -81612,6 +81611,13 @@ var Gate = /*#__PURE__*/function () {
     key: "isAuthor",
     value: function isAuthor() {
       return this.user.type === "author";
+    }
+  }, {
+    key: "isUserOrAuthor",
+    value: function isUserOrAuthor() {
+      if (this.user.type === 'user' || this.user.type === 'author') {
+        return true;
+      }
     }
   }]);
 

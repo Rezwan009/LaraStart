@@ -1,0 +1,28 @@
+
+.main-wrapper{
+    height: 100vh;
+    width: 100vw;
+    /*position: relative;*/
+}
+.main-wrapper img{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    width: 100vw;
+    max-height: 100vh;
+
+}
+.main-wrapper h1{
+    position: absolute;
+    color: crimson;
+    padding: 200px 450px;
+    text-align: center;
+}
+.underline{
+    text-decoration: none !important;
+    display: inline;
+    position: relative;
+    overflow: hidden;
+    color: aquamarine !important;
+    cursor: pointer;
+}

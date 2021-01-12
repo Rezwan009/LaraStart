@@ -1,5 +1,24 @@
 {
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
-  "editor.tokenColorCustomizations": null
+  "editor.tokenColorCustomizations": null,
+  "launch": {
+    "configurations": [],
+    "compounds": []
+  },
+  "js/ts.implicitProjectConfig.checkJs": true,
+  "js/ts.implicitProjectConfig.strictNullChecks": true,
+  "json.schemas": [
+  
+  ],
+  "[json]": {
+
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace",
+    "gitlens.codeLens.scopes": [
+      "document"
+    ]
+  }
 }

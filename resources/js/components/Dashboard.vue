@@ -7,8 +7,6 @@
 
                     <div class="card-body">
                         I'm an example component.
-
-                        <NotFound/>
                     </div>
                 </div>
             </div>
