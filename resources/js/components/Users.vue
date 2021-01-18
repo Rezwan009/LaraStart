@@ -297,7 +297,18 @@ export default {
     },
   },
   created() {
+
     this.loadUsers();
+    Fire.$on('searching',()=>{
+        let query = this.$parent.search;
+       axios.get('api/findUser?q='+ query)
+        .then((data)=>{
+            this.users=data.data;
+        })
+        .catch(()=>{
+
+        })
+    });
     /* When a new user created it gonna load it instantly */
     Fire.$on("AfterCreate", () => {
       this.loadUsers();

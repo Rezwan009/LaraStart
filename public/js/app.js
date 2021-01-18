@@ -2595,6 +2595,12 @@ __webpack_require__.r(__webpack_exports__);
     var _this6 = this;
 
     this.loadUsers();
+    Fire.$on('searching', function () {
+      var query = _this6.$parent.search;
+      axios.get('api/findUser?q=' + query).then(function (data) {
+        _this6.users = data.data;
+      })["catch"](function () {});
+    });
     /* When a new user created it gonna load it instantly */
 
     Fire.$on("AfterCreate", function () {
@@ -82282,8 +82288,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Dashboard_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue");
 /* harmony import */ var _components_Profile_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Profile.vue */ "./resources/js/components/Profile.vue");
 /* harmony import */ var _components_Users_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/Users.vue */ "./resources/js/components/Users.vue");
-/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
-/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _components_NotFound_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue");
+/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
+/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_10__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -82344,12 +82351,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 
 
 
+
 /* Importing vue V-form for more stunning data validation and more stuff */
 
 
-window.Form = vform__WEBPACK_IMPORTED_MODULE_9__["Form"];
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_9__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_9__["HasError"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_9__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_9__["AlertError"]);
+window.Form = vform__WEBPACK_IMPORTED_MODULE_10__["Form"];
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_10__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_10__["HasError"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_10__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_10__["AlertError"]);
 /*Pagination registering here*/
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('pagination', __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js"));
@@ -82375,6 +82383,9 @@ var routes = [{
 }, {
   path: "/users",
   component: _components_Users_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+}, {
+  path: "*",
+  component: _components_NotFound_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]({
   mode: "history",
@@ -82399,7 +82410,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("example-component", __webp
  */
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  router: router
+  router: router,
+  data: {
+    search: ''
+  },
+  methods: {
+    searching: _.debounce(function () {
+      Fire.$emit('searching');
+    }, 1000)
+  }
 }).$mount("#app");
 
 /***/ }),

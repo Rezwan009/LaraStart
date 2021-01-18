@@ -30156,3 +30156,6 @@ a.text-dark:focus {
   margin-top: -3px;
 }
 
+.search{
+    width: 20% !important;
+}

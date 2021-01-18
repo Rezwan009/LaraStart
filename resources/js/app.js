@@ -70,6 +70,7 @@ Vue.use(VueRouter);
 import Dashboard from "./components/Dashboard.vue";
 import Profile from "./components/Profile.vue";
 import Users from "./components/Users.vue";
+import NotFound from "./components/NotFound.vue";
 
 
 
@@ -101,7 +102,8 @@ window.Fire = new Vue()
 let routes = [
     { path: "/dashboard", component: Dashboard },
     { path: "/profile", component: Profile },
-    { path: "/users", component: Users }
+    { path: "/users", component: Users },
+    { path: "*", component: NotFound }
 ];
 const router = new VueRouter({
     mode: "history",
@@ -131,5 +133,15 @@ Vue.component(
  */
 
 const app = new Vue({
-    router
+    router,
+    data:{
+        search:''
+    },
+    methods:{
+        searching:_.debounce(()=>{
+            Fire.$emit('searching');
+
+        },1000)
+
+    }
 }).$mount("#app");
