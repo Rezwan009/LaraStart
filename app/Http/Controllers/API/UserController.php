@@ -21,12 +21,14 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {        //$this->authorize('isAdmin');
-        if(Gate::allows('isUser') || Gate::allows('isAuthor')){
+    {
+        $this->authorize('isAdmin');
+        return User::latest()->paginate(2);
 
-            return User::latest()->paginate(10);
+        /*if(Gate::allows('isUser') || Gate::allows('isAuthor')){
 
-        }
+
+        }*/
 
     }
 

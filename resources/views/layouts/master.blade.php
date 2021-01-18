@@ -85,7 +85,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </router-link>
 
             </li>
-            @can('isUserOrAuthor')
+            @can('isAdmin')
             <li class="nav-item ">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-cog text-pink"></i>

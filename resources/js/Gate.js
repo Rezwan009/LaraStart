@@ -19,5 +19,6 @@ export default class Gate{
       if(this.user.type === 'user' || this.user.type === 'author'){
           return true;
       }
+
   }
 }

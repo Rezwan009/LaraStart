@@ -82,7 +82,8 @@ window.Form = Form;
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
-
+/*Pagination registering here*/
+Vue.component('pagination', require('laravel-vue-pagination'));
 /* Define filter for customization  */
 
 Vue.filter('capitalize',function(value){
