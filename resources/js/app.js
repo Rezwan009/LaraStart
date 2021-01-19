@@ -142,6 +142,10 @@ const app = new Vue({
             Fire.$emit('searching');
 
         },1000)
+        ,
+        printAsPdf(){
+            window.print();
+        }
 
     }
 }).$mount("#app");

@@ -18,9 +18,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/invoice', [App\Http\Controllers\HomeController::class, 'print'])->name('print');
+
 
 
 Route::get('{path}', [App\Http\Controllers\HomeController::class, 'index'])->where('path', '[a-z]+');
